@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 type Props = {
   id: string
@@ -8,25 +8,18 @@ type Props = {
 }
 
 const FloatingLabelInputText = ({id, label, value, name}: Props) => {
-  const inputRef = useRef<HTMLInputElement>(null)
 
   const [isEmpty, setIsEmpty] = useState(true)
-  const [inputValue, setInputValue] = useState("")
+  const [inputValue, setInputValue] = useState(value)
 
   useEffect(() => {
-    if (inputValue.trim() === "") setIsEmpty(true)
+    if (inputValue?.trim() === "" || inputValue === undefined) setIsEmpty(true)
     else setIsEmpty(false)
   }, [inputValue])
-
-  useEffect(() => {
-    if (inputRef.current?.value === "") setIsEmpty(true)
-    else setIsEmpty(false)
-  }, [])
 
   return (
     <div className="relative w-full my-5">
       <input
-        ref={inputRef}
         type="text"
         defaultValue={value}
         name={name}
