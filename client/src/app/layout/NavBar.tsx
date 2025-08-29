@@ -1,10 +1,7 @@
 import { MdOutlineGroup } from "react-icons/md"
+import { Link, NavLink } from "react-router"
 
-type Props = {
-    setOnEditMode: () => void
-}
-
-const NavBar = ({setOnEditMode}: Props) => {
+const NavBar = () => {
   return (
     <nav 
         className="flex justify-between items-center px-20 py-2 text-white"
@@ -12,20 +9,27 @@ const NavBar = ({setOnEditMode}: Props) => {
     >
         <div className="flex items-center gap-2 font-bold text-2xl hover:bg-black/5 hover:rounded-sm px-4 py-1">
             <MdOutlineGroup />
-            <div>Reactivities</div>
+            <Link to="/">Reactivities</Link>
         </div>
         <div className="flex uppercase font-bold">
-            <div
-                className="hover:bg-black/5 hover:rounded-sm px-4 py-1">Activities</div>
-            <div
-                className="hover:bg-black/5 hover:rounded-sm px-4 py-1">About</div>
-            <div
-                className="hover:bg-black/5 hover:rounded-sm px-4 py-1">Contact</div>
+            <NavLink
+                to="/activities"
+                className={({ isActive }) => 
+                    (isActive ? "hover:bg-black/5 hover:rounded-sm px-4 py-1 text-amber-300"
+                    : "hover:bg-black/5 hover:rounded-sm px-4 py-1")
+                }                
+            >Activities</NavLink>
+            <NavLink
+                to="/createActivity"
+                className={({ isActive }) => 
+                    (isActive ? "hover:bg-black/5 hover:rounded-sm px-4 py-1 text-amber-300"
+                    : "hover:bg-black/5 hover:rounded-sm px-4 py-1")
+                } 
+            >Create activity</NavLink>
         </div>
         <button 
-            onClick={setOnEditMode}
             className="bg-amber-600 hover:bg-amber-600/60 shadow-xl rounded-sm px-4 py-1 cursor-pointer"
-        >Create activity</button>
+        >User menu</button>
     </nav>
   )
 }

@@ -1,11 +1,11 @@
+import { Link } from "react-router"
 import { useActivities } from "../../../lib/hooks/useActivities"
 
 type Props = {
     activity: Activity
-    selectActivity: (id: string) => void
 }
 
-const ActivityCard = ({activity, selectActivity}: Props) => {
+const ActivityCard = ({activity}: Props) => {
 
   const {deleteActivity} = useActivities()
 
@@ -26,11 +26,11 @@ const ActivityCard = ({activity, selectActivity}: Props) => {
             className="rounded-sm px-4 py-1 bg-red-600 hover:bg-red-600/60 text-white uppercase cursor-pointer text-sm
             font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed"
           >Delete</button>
-          <button
-            onClick={() => selectActivity(activity.id)}
+          <Link
+            to={`/activities/${activity.id}`}
             className="rounded-sm px-4 py-1 bg-blue-800 hover:bg-blue-800/60 text-white uppercase cursor-pointer text-sm
             font-semibold"
-          >View</button>
+          >View</Link>
         </div>
       </div>
     </div>

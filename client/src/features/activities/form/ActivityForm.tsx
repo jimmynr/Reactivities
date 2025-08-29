@@ -3,15 +3,13 @@ import FloatingLabelInputDate from "../../inputs/FloatingLabelInputDate";
 import FloatingLabelInputText from "../../inputs/FloatingLabelInputText";
 import FloatingLabelTextarea from "../../inputs/FloatingLabelTextarea";
 import { useActivities } from "../../../lib/hooks/useActivities";
+import { Link, useNavigate, useParams } from "react-router";
 
-type Props = {
-  activity: Activity | undefined;
-  cancelEditMode: () => void;
-};
+const ActivityForm = () => {
 
-const ActivityForm = ({ activity, cancelEditMode }: Props) => {
-
-  const {updateActivity, createActivity} = useActivities()
+  const {id} = useParams()
+  const {updateActivity, createActivity, activity, isLoadingActivity} = useActivities(id)
+  const navigateTo = useNavigate()
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -27,18 +25,24 @@ const ActivityForm = ({ activity, cancelEditMode }: Props) => {
     if (activity) {
       data.id = activity.id
       await updateActivity.mutateAsync(data as unknown as Activity)
+      navigateTo(`activities/${activity.id}`)
     } else {
-      await createActivity.mutateAsync(data as unknown as Activity)
+      createActivity.mutate(data as unknown as Activity, {
+        onSuccess: (id) => {
+          navigateTo(`/activities/${id}`)
+        }
+      })
     }
-    cancelEditMode()
   }
+
+  if (isLoadingActivity) return <div>Loading activity...</div>
 
   return (
     <form 
-        className="bg-white shadow-xl rounded-xl p-4 my-4 w-full h-fit"
+        className="bg-white shadow-xl rounded-xl p-4 mx-auto my-4 w-1/2 h-fit"
         onSubmit={handleSubmit}
     >
-      <div className="font-semibold text-lg text-blue-800">Create activity</div>
+      <div className="font-semibold text-lg text-blue-800">{activity ? "Edit activity" : "Create activity"}</div>
       <FloatingLabelInputText
         name="title"
         id="title"
@@ -79,13 +83,12 @@ const ActivityForm = ({ activity, cancelEditMode }: Props) => {
         value={activity?.venue}
       />
       <div className="form-action flex justify-end items-center mt-5">
-        <button
-          type="button"
+        <Link
+          to="/activities"
           className="uppercase px-4 py-1 text-sm font-semibold cursor-pointer"
-          onClick={cancelEditMode}
         >
           Cancel
-        </button>
+        </Link>
         <button
           disabled={updateActivity.isPending || createActivity.isPending}
           type="submit"
