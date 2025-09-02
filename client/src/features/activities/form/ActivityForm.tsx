@@ -65,10 +65,10 @@ const ActivityForm = () => {
         name="date" 
         id="date" 
         label="Date" 
-        value={activity?.date ? new Date(activity?.date).toISOString().split("T")[0]
-        : new Date().toISOString().split("T")[0]
+        value={activity?.date ? new Date(activity?.date)
+        : new Date()
         }
-        // value={activity?.date ? activity?.date.split("T")[0] : ""}
+        // value={activity?.date ? activity?.toISOString().split("T")[0] : new Date().toISOString().split("T")[0]}
       />
       <FloatingLabelInputText 
         name="city" 

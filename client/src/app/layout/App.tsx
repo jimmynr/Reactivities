@@ -1,16 +1,21 @@
 
+import HomePage from "../home/HomePage"
 import NavBar from "./NavBar"
-import { Outlet } from "react-router"
+import { Outlet, useLocation } from "react-router"
 
 const App = () => {
+
+  const { pathname } = useLocation()
+
   return (
-    <div className="bg-[#eeeeee] min-h-screen">
+    pathname === "/" ? <HomePage /> 
+    : <div className="bg-[#eeeeee] min-h-screen">
       <NavBar />
       <div className="flex-grow">
         <Outlet />  
       </div>   
     </div>
-  );
-};
+  )
+}
 
 export default App

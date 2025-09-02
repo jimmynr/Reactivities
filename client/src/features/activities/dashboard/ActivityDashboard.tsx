@@ -1,13 +1,14 @@
+import ActivityFilter from "./ActivityFilter"
 import ActivityList from "./ActivityList"
 
 const ActivityDashboard = () => {
   return (
     <div className="flex w-full">
-      <div className="w-3/5 px-10">
+      <div className="w-2/3 px-10">
         <ActivityList />
       </div>
-      <div className="w-2/5 px-10">
-        Activity Filter goes here
+      <div className="w-1/3 px-10">
+        <ActivityFilter />
       </div>
     </div>
   )
